@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VmsInform.Common\VmsInform.Common.csproj" />
+    <ProjectReference Include="..\VmsInform.DAL\VmsInform.DAL.csproj" />
+    <ProjectReference Include="..\VmsInform.Web.Dto\VmsInform.Web.Dto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TypeMapping\Profiles\Converters\" />
+  </ItemGroup>
+
+</Project>

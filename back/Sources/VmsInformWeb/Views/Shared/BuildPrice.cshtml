@@ -1,0 +1,37 @@
+﻿@model FastReport.Web.WebReport
+
+<html>
+<head>
+    <script type="text/javascript" src="../scripts/jquery-3.5.1.min.js"></script>
+
+</head>
+
+<body>
+    <script>
+        function getPdf() {
+            var link = document.createElement('a');
+            link.href = 'BuildPricePdf?PriceId=@ViewBag.PriceId';
+
+            //Dispatching click event.
+            if (document.createEvent) {
+                var e = document.createEvent('MouseEvents');
+                e.initEvent('click', true, true);
+                link.dispatchEvent(e);
+                return true;
+            }
+        }
+        $(function () {
+            let div = document.createElement('div');
+            div.innerHTML = "<img title='Скачать PDF' src='../Images/pdf.svg' />";
+            div.className = '@ViewBag.ReportId-toolbar-item'
+            div.onclick = getPdf;
+            setTimeout(() => {
+                $('.@ViewBag.ReportId-toolbar').append(div)
+            }, 1000);
+        });
+    </script>
+    <div>
+        @await Model.Render()
+    </div>
+</body>
+</html>
