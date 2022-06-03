@@ -8,6 +8,6 @@ namespace VmsInform.DAL.Domain
         public string PasswordHash { get; set; }
         public string FullName { get; set; }
         public bool IsActive { get; set; }
-        public bool IsAmin { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

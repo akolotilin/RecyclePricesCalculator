@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<UserSession> builder)
         {
             base.Configure(builder);
-            builder.ToTable("UserSessions");
+            builder.ToTable("user_sessions");
 
             builder.HasOne(a => a.User)
                 .WithMany()
@@ -17,8 +17,7 @@ namespace VmsInform.DAL.Mapping
                 .IsRequired();
 
             builder.Property(a => a.StartTime)
-                .IsRequired()
-                .HasDefaultValueSql("getdate()");
+                .IsRequired();
 
             builder.Property(a => a.SessionKey)
                 .IsRequired()

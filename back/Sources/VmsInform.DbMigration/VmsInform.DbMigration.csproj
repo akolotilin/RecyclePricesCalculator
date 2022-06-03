@@ -5,20 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200505222318_GoodGroups.cs" />
-    <Compile Remove="Migrations\20200513194857_BasePriceAddPartner.cs" />
-    <Compile Remove="Migrations\20200524141104_Add_Good_BaseGoodRule.cs" />
-    <Compile Remove="Migrations\20200606133436_Add_Users.cs" />
-    <Compile Remove="Migrations\20200606134311_Add_Users.cs" />
-    <Compile Remove="Migrations\20200606134420_Add_Users.cs" />
-    <Compile Remove="Migrations\20200613150201_Add_Shipments.cs" />
-    <Compile Remove="Migrations\20200917002216_Add_New_And_Notifications.cs" />
-    <Compile Remove="Migrations\20200917120909_Add_News_And_Notifications.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="runtime.linux-x64.CoreCompat.System.Drawing" Version="1.0.0-beta009" />

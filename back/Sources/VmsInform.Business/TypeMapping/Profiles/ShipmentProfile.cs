@@ -12,7 +12,7 @@ namespace VmsInform.Business.TypeMapping.Profiles
         public ShipmentProfile()
         {
             CreateMap<BaseShipmentDto, Shipment>()
-                .ForMember(a => a.Comment, opt => opt.MapFrom(src => src.Comment))
+                .ForMember(a => a.Comment, opt => opt.MapFrom(src => src.Comment ?? string.Empty))
                 .ForMember(a => a.ShipmentDate, opt => opt.MapFrom(src => src.ShipmentDate))
                 .ForAllOtherMembers(opt => opt.Ignore());
 

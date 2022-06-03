@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<BaseGoodRule> builder)
         {
             base.Configure(builder);
-            builder.ToTable("BaseGoodRules");
+            builder.ToTable("base_good_gules");
 
             builder.HasOne(a => a.BaseGood)
                 .WithMany()

@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<PriceGoodOrder> builder)
         {
             base.Configure(builder);
-            builder.ToTable("PriceGoodOrder");
+            builder.ToTable("price_good_order");
 
             builder.HasOne(a => a.Good)
                 .WithOne()

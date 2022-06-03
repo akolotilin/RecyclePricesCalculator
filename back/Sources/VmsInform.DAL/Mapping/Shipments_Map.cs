@@ -9,14 +9,13 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<Shipment> builder)
         {
             base.Configure(builder);
-            builder.ToTable("Shipments");
+            builder.ToTable("shipments");
 
             AddEditorInfo(builder);
 
             builder.Property(a => a.Comment)
-                .HasColumnType("nvarchar(max)")
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
+                .HasColumnType("text")
+                .IsRequired();
 
             builder.Property(a => a.ShipmentDate)
                 .IsRequired();

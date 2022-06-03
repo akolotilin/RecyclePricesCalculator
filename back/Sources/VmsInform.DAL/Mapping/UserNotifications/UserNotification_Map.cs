@@ -8,7 +8,7 @@ namespace VmsInform.DAL.Mapping.UserNotifications
     {
         public void Configure(EntityTypeBuilder<UserNotification> builder)
         {
-            builder.ToTable("UserNotifications");
+            builder.ToTable("user_notifications");
 
             builder.Property(a => a.Id)
                 .HasColumnName("UserNotificationid");

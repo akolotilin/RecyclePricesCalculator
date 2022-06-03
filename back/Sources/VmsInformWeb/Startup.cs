@@ -12,6 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -140,7 +141,9 @@ namespace VmsInformWeb
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            //new DbMigrationContext(Configuration.GetConnectionString(_connectionStringName)).Database.Migrate();
+            new DbMigrationContext(Configuration.GetConnectionString(_connectionStringName)).Database.Migrate();
+
+            Console.WriteLine(Configuration.GetConnectionString(_connectionStringName));
             //new DbMigrationContext("Data Source=192.168.5.230;Initial Catalog=autoPrice;User ID=sa; pwd=st3b8aXd;").Database.Migrate();
 
         }

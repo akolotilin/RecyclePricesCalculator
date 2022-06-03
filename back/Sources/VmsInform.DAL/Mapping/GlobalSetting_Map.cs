@@ -8,7 +8,7 @@ namespace VmsInform.DAL.Mapping
     {
         public void Configure(EntityTypeBuilder<GlobalSetting> builder)
         {
-            builder.ToTable("Settings")
+            builder.ToTable("settings")
                 .HasKey(a => a.Id);
 
             builder.Property(a => a.Id);

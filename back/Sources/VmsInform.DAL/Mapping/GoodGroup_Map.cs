@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<GoodGroup> builder)
         {
             base.Configure(builder);
-            builder.ToTable("GoodGroups");
+            builder.ToTable("good_groups");
 
             builder.HasOne(a => a.Parent)
                 .WithMany()
@@ -21,7 +21,7 @@ namespace VmsInform.DAL.Mapping
                 .HasMaxLength(200);
 
             builder.Property(a => a.Guid)
-                .HasDefaultValueSql("newid()")
+                .HasColumnType("varchar(36)")
                 .IsRequired();
 
             builder.Property(a => a.Code)

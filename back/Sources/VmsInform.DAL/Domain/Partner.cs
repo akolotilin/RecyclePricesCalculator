@@ -12,13 +12,6 @@ namespace VmsInform.DAL.Domain
         public bool IsBuyer { get; set; }
         public string TaxNumber { get; set; }
 
-        public string CellPhone { get; set; }
-        public string OfficePhone { get; set; }
-        public string Email { get; set; }
-        public string Viber { get; set; }
-        public string WhatsApp { get; set; }
-        public string Skype { get; set; }
-
         public decimal TransportPrice { get; set; }
         public bool UsePriceOffersByFactories { get; set; }
 

@@ -1,10 +1,9 @@
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Runtime.InteropServices;
 
 namespace VmsInformWeb
@@ -12,17 +11,17 @@ namespace VmsInformWeb
     public class Program
     {
         static Process _xvfb;
-        const string _xvfbPid = "pid/pid.xvfb.fr";
+        const string _xvfbPid = "/app/pid/pid.xvfb.fr";
 
         public static void Main(string[] args)
         {
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            //    LinuxStart();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                LinuxStart();
 
             CreateWebHostBuilder(args).Build().Run();
 
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            //    LinuxStop();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                LinuxStop();
         }
 
         private static void LinuxStop()
@@ -59,16 +58,16 @@ namespace VmsInformWeb
             _xvfb = new Process();
             _xvfb.StartInfo = info;
             _xvfb.Start();
-            File.WriteAllText(_xvfbPid, _xvfb.Id.ToString());
+            //File.WriteAllText(_xvfbPid, _xvfb.Id.ToString());
         }
 
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .UseKestrel(opt => {
-                opt.Listen(IPAddress.Loopback, 5080);
-            })
-            .UseStartup<Startup>()
-            .ConfigureServices(service => service.AddAutofac());
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }

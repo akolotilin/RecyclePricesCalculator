@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using VmsInform.Business.Commands.Goods.AddGood;
 using VmsInform.Business.Commands.Goods.UpdateGood;
 using VmsInform.Business.TypeMapping.Profiles.Resolvers;
@@ -19,7 +20,8 @@ namespace VmsInform.Business.TypeMapping.Profiles
             CreateMap<AddGoodCommand, Good>()
                 .ForMember(a => a.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(a => a.Comment, opt => opt.MapFrom(src => src.Comment))
-                .ForMember(a => a.GoodGroupId, opt => opt.MapFrom(src => src.GroupId));
+                .ForMember(a => a.GoodGroupId, opt => opt.MapFrom(src => src.GroupId))
+                .ForMember(a => a.Guid, opt => opt.MapFrom(src => Guid.NewGuid()));
 
             CreateMap<Good, GoodEditDto>()
                 .ForMember(a => a.Name, opt => opt.MapFrom(src => src.Name))

@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<PartnerGoodsToSell> builder)
         {
             base.Configure(builder);
-            builder.ToTable("PartnerGoodsToSell");
+            builder.ToTable("partner_goods_to_sell");
 
             builder.HasOne(a => a.Partner)
                 .WithMany(a => a.GoodsToSell)
@@ -46,8 +46,7 @@ namespace VmsInform.DAL.Mapping
 
             builder.Property(a => a.ValidThru)
                 .IsRequired()
-                .HasColumnType("date")
-                .HasDefaultValueSql("getdate()");
+                .HasColumnType("date");
         }
     }
 }

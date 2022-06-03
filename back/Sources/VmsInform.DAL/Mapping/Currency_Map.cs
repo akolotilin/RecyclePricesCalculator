@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("Currencies");
+            builder.ToTable("currencies");
 
             builder.Property(a => a.Name)
                 .IsRequired()

@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("Partners");
+            builder.ToTable("partners");
 
             builder.Property(a => a.Name)
                 .IsRequired()
@@ -23,31 +23,6 @@ namespace VmsInform.DAL.Mapping
             builder.Property(a => a.Comment)
                 .HasDefaultValue(string.Empty)
                 .HasMaxLength(1000);
-
-            builder.Property(a => a.CellPhone)
-                .HasMaxLength(13)
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
-
-            builder.Property(a => a.Viber)
-                .HasMaxLength(13)
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
-
-            builder.Property(a => a.WhatsApp)
-                .HasMaxLength(13)
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
-
-            builder.Property(a => a.Email)
-                .HasMaxLength(100)
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
-
-            builder.Property(a => a.Skype)
-                .HasMaxLength(100)
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
 
             builder.Property(a => a.TaxNumber)
                 .HasMaxLength(12)

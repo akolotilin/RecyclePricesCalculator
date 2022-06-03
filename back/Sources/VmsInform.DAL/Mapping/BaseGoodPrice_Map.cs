@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<BaseGoodPrice> builder)
         {
             base.Configure(builder);
-            builder.ToTable("BaseGoodPrices");
+            builder.ToTable("base_good_prices");
 
             builder.Property(a => a.GoodId)
                 .IsRequired();
@@ -27,7 +27,7 @@ namespace VmsInform.DAL.Mapping
             builder.Property(a => a.Price)
                 .IsRequired()
                 .HasDefaultValue(0)
-                .HasColumnType("decimal(15,2)");
+                .HasColumnType("numeric(15,2)");
 
             builder.HasOne(a => a.Currency)
                 .WithMany()

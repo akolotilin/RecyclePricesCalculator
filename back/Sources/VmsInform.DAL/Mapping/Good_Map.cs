@@ -8,7 +8,7 @@ namespace VmsInform.DAL.Mapping
     {
         public override void Configure(EntityTypeBuilder<Good> builder)
         {
-            builder.ToTable("Good");
+            builder.ToTable("goods");
             base.Configure(builder);
 
             builder.Property(a => a.Name)
@@ -38,7 +38,6 @@ namespace VmsInform.DAL.Mapping
                 .IsRequired(false);
 
             builder.Property(a => a.Guid)
-                .HasDefaultValueSql("newid()")
                 .IsRequired();
         }
     }

@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<PasswordRestoreRequest> builder)
         {
             base.Configure(builder);
-            builder.ToTable("PasswordRestoreRequests");
+            builder.ToTable("password_restore_requests");
 
             builder.HasOne(a => a.User)
                 .WithMany()
@@ -21,8 +21,7 @@ namespace VmsInform.DAL.Mapping
                 .IsRequired();
 
             builder.Property(a => a.CreateDate)
-                .IsRequired()
-                .HasDefaultValueSql("getdate()");
+                .IsRequired();
 
             builder.Property(a => a.ExpiryDate)
                 .IsRequired();

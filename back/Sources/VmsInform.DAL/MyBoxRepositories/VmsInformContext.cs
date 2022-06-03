@@ -56,7 +56,7 @@ namespace VmsInform.DAL.MyBoxRepositories
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionString)
+                optionsBuilder.UseMySQL(_connectionString)
                     .UseLazyLoadingProxies();
                 
                 if (_loggerFactory != null)

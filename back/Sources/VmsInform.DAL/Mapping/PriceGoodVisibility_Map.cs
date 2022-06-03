@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("PriceGoodsVisibility");
+            builder.ToTable("price_goods_visibility");
             builder.HasOne(a => a.Good)
                 .WithMany()
                 .HasForeignKey(a => a.GoodId)

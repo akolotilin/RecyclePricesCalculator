@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<User> builder)
         {
             base.Configure(builder);
-            builder.ToTable("Users");
+            builder.ToTable("users");
 
             builder.Property(a => a.EMail)
                 .IsRequired()
@@ -21,7 +21,8 @@ namespace VmsInform.DAL.Mapping
 
             builder.Property(a => a.PasswordHash)
                 .IsRequired()
-                .HasDefaultValue(string.Empty);
+                .HasDefaultValue(string.Empty)
+                .HasMaxLength(100);
 
             builder.HasIndex(a => a.EMail)
                 .IsUnique();

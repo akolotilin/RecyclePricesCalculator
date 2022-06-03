@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<PartnerPriceType> builder)
         {
             base.Configure(builder);
-            builder.ToTable("PartnerPriceType");
+            builder.ToTable("partner_price_type");
 
             builder.HasOne(a => a.Partner)
                 .WithMany(a => a.PriceTypes)

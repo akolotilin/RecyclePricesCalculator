@@ -11,7 +11,8 @@ namespace VmsInform.Business.TypeMapping.Profiles
         {
             CreateMap<Factory, FactoryDto>();
 
-            CreateMap<FactoryDto, Factory>();
+            CreateMap<FactoryDto, Factory>()
+                .ForMember(a => a.Comment, opt => opt.MapFrom(src => src.Comment ?? string.Empty));
 
             CreateMap<PartnerFactory, PartnerFactoryDto>()
                 .ForMember(a => a.Id, opt => opt.MapFrom(src => src.Factory.Id))

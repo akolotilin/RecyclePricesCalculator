@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<GoodSurcharge> builder)
         {
             base.Configure(builder);
-            builder.ToTable("GoodSurcharge");
+            builder.ToTable("good_surcharge");
 
             builder.HasOne(a => a.Good)
                 .WithMany(a => a.GoodSurcharges)

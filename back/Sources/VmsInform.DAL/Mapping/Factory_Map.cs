@@ -9,15 +9,14 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<Factory> builder)
         {
             base.Configure(builder);
-            builder.ToTable("Factories");
+            builder.ToTable("factories");
 
             builder.Property(a => a.Name)
                 .IsRequired()
                 .HasMaxLength(250);
 
             builder.Property(a => a.Comment)
-                .HasDefaultValue(string.Empty)
-                .HasColumnType("nvarchar(max)");
+                .HasColumnType("text");
 
             builder.Property(a => a.Address)
                 .HasMaxLength(500)

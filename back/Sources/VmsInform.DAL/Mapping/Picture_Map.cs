@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<Picture> builder)
         {
             base.Configure(builder);
-            builder.ToTable("Pictures");
+            builder.ToTable("pictures");
 
             builder.Property(a => a.Data)
                 .IsRequired();

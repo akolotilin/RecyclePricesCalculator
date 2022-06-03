@@ -13,7 +13,7 @@ namespace VmsInform.Common.TypeMapping.Profiles
                 .ForMember(a => a.Token, opt => opt.MapFrom(src => src.SessionKey))
                 .ForMember(a => a.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(a => a.Id, opt => opt.MapFrom(src => src.UserId))
-                .ForMember(a => a.IsAdmin, opt => opt.MapFrom(src => src.User.IsAmin));
+                .ForMember(a => a.IsAdmin, opt => opt.MapFrom(src => src.User.IsAdmin));
 
             CreateMap<UserSession, UserSessionDto>()
                 .ForMember(a => a.Key, opt => opt.MapFrom(src => src.SessionKey))
@@ -24,13 +24,13 @@ namespace VmsInform.Common.TypeMapping.Profiles
                 .ForMember(a => a.EMail, opt => opt.MapFrom(src => src.EMail))
                 .ForMember(a => a.FullName, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(a => a.IsActive, opt => opt.MapFrom(src => src.IsActive))
-                .ForMember(a => a.IsAdmin, opt => opt.MapFrom(src => src.IsAmin));
+                .ForMember(a => a.IsAdmin, opt => opt.MapFrom(src => src.IsAdmin));
 
             CreateMap<UserDto, User>()
                 .ForMember(a => a.EMail, opt => opt.MapFrom(src => src.EMail))
                 .ForMember(a => a.FullName, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(a => a.IsActive, opt => opt.MapFrom(src => src.IsActive))
-                .ForMember(a => a.IsAmin, opt => opt.MapFrom(src => src.IsAdmin))
+                .ForMember(a => a.IsAdmin, opt => opt.MapFrom(src => src.IsAdmin))
                 .ForAllOtherMembers(opt => opt.Ignore());
         }
     }

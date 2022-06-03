@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("PartnerShipmentAddresses");
+            builder.ToTable("partner_shipment_addresses");
 
             builder.HasOne(a => a.Partner)
                 .WithMany(a => a.ShipmentAddresses)

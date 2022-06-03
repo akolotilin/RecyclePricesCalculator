@@ -9,7 +9,7 @@ namespace VmsInform.DAL.Mapping
         public override void Configure(EntityTypeBuilder<PartnerContact> builder)
         {
             base.Configure(builder);
-            builder.ToTable("PartnerContacts");
+            builder.ToTable("partner_contacts");
             builder.HasIndex(a => a.PartnerId);
 
             builder.HasOne(a => a.Partner)

@@ -37,7 +37,7 @@ namespace VmsInform.Common.Commands.RestorePassword
                 user = new User {
                     EMail = request.EMail,
                     FullName = request.EMail,
-                    IsAmin = true,
+                    IsAdmin = true,
                     IsActive = true,
                     PasswordHash = string.Empty
                 };

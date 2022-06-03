@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VmsInform.DbMigration;
@@ -10,62 +9,63 @@ using VmsInform.DbMigration;
 namespace VmsInform.DbMigration.Migrations
 {
     [DbContext(typeof(DbMigrationContext))]
-    [Migration("20200723224024_Add_BasePrice_Currency")]
-    partial class Add_BasePrice_Currency
+    [Migration("20220603171041_Removed_Unused_Fields")]
+    partial class Removed_Unused_Fields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.17");
 
             modelBuilder.Entity("VmsInform.DAL.Domain.BaseGoodPrice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("CurrencyId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
+
+                    b.Property<long?>("FactoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GoodId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("LastUpdated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<long?>("PartnerId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(15,2)")
+                        .HasColumnType("numeric(15,2)")
                         .HasDefaultValue(0m);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
 
+                    b.HasIndex("FactoryId");
+
                     b.HasIndex("GoodId")
                         .IsUnique();
 
                     b.HasIndex("PartnerId");
 
-                    b.ToTable("BaseGoodPrices");
+                    b.ToTable("base_good_prices");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.BaseGoodRule", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Add")
                         .HasColumnType("decimal(10,2)");
@@ -80,126 +80,165 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("BaseGoodId");
 
-                    b.ToTable("BaseGoodRules");
+                    b.ToTable("base_good_gules");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Currency", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)");
 
                     b.Property<decimal>("ExchangeRate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(15,2)")
                         .HasDefaultValue(0m);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("currencies");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.Factory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Distance")
+                        .HasColumnType("decimal(15,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("MaxGarbage")
+                        .HasColumnType("decimal(15,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("MinGarbage")
+                        .HasColumnType("decimal(15,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("factories");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.GlobalSetting", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Domain")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("Order")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .IsUnique();
 
-                    b.ToTable("Settings");
+                    b.ToTable("settings");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Good", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("BaseGoodRuleId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Code")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)");
+
                     b.Property<string>("Comment")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
                         .HasDefaultValue("");
 
                     b.Property<long>("GoodGroupId")
                         .HasColumnType("bigint");
 
+                    b.Property<byte[]>("Guid")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
+
                     b.Property<bool>("InputPriceManual")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<long?>("SellCurrencyId")
-                        .HasColumnType("bigint");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BaseGoodRuleId")
-                        .IsUnique()
-                        .HasFilter("[BaseGoodRuleId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("GoodGroupId");
 
-                    b.HasIndex("SellCurrencyId");
-
-                    b.ToTable("Good");
+                    b.ToTable("goods");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.GoodGroup", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)");
+
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
@@ -208,15 +247,14 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("GoodGroups");
+                    b.ToTable("good_groups");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.GoodSurcharge", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GoodId")
                         .HasColumnType("bigint");
@@ -225,7 +263,6 @@ namespace VmsInform.DbMigration.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Surcharge")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(10,2)")
                         .HasDefaultValue(0m);
 
@@ -235,105 +272,103 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("PriceTypeId");
 
-                    b.ToTable("GoodSurcharge");
+                    b.ToTable("good_surcharge");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.NewsEntry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("IsImportant")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("PublishDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("news");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Partner", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("CellPhone")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(13)")
-                        .HasMaxLength(13)
-                        .HasDefaultValue("");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("Comment")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000)
-                        .HasDefaultValue("");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100)
+                        .HasColumnType("varchar(1000)")
                         .HasDefaultValue("");
 
                     b.Property<bool>("IsBuyer")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsSeller")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("LastPricesUpdateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("OfficePhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Skype")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100)
-                        .HasDefaultValue("");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("TaxNumber")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(12)")
                         .HasMaxLength(12)
+                        .HasColumnType("varchar(12)")
                         .HasDefaultValue("");
 
                     b.Property<decimal>("TransportPrice")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(15,2)")
                         .HasDefaultValue(0m);
 
-                    b.Property<string>("Viber")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(13)")
-                        .HasMaxLength(13)
-                        .HasDefaultValue("");
-
-                    b.Property<string>("WhatsApp")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(13)")
-                        .HasMaxLength(13)
-                        .HasDefaultValue("");
+                    b.Property<bool>("UsePriceOffersByFactories")
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Partners");
+                    b.ToTable("partners");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerContact", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ContactData")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ContactType")
                         .HasColumnType("int");
@@ -345,17 +380,40 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("PartnerId");
 
-                    b.ToTable("PartnerContacts");
+                    b.ToTable("partner_contacts");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PartnerFactory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FactoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PartnerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactoryId");
+
+                    b.HasIndex("PartnerId");
+
+                    b.ToTable("partner_factory");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerGoodsToSell", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("FactoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("GoodId")
@@ -365,35 +423,33 @@ namespace VmsInform.DbMigration.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(15,2)")
                         .HasDefaultValue(0m);
 
                     b.Property<DateTime>("ValidThru")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
 
+                    b.HasIndex("FactoryId");
+
                     b.HasIndex("GoodId");
 
                     b.HasIndex("PartnerId");
 
-                    b.HasIndex("GoodId", "PartnerId")
+                    b.HasIndex("GoodId", "PartnerId", "FactoryId")
                         .IsUnique();
 
-                    b.ToTable("PartnerGoodsToSell");
+                    b.ToTable("partner_goods_to_sell");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerPriceType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long>("PartnerId")
                         .HasColumnType("bigint");
@@ -407,31 +463,49 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("PriceTypeId");
 
-                    b.ToTable("PartnerPriceType");
+                    b.ToTable("partner_price_type");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PartnerShipmentAddress", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<long>("PartnerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerId");
+
+                    b.ToTable("partner_shipment_addresses");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PasswordRestoreRequest", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -440,19 +514,18 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordRestoreRequests");
+                    b.ToTable("password_restore_requests");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Picture", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("Data")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(4000)");
 
                     b.Property<long?>("ShipmentId")
                         .HasColumnType("bigint");
@@ -461,15 +534,14 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("pictures");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PriceGoodOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GoodId")
                         .HasColumnType("bigint");
@@ -482,49 +554,74 @@ namespace VmsInform.DbMigration.Migrations
                     b.HasIndex("GoodId")
                         .IsUnique();
 
-                    b.ToTable("PriceGoodOrder");
+                    b.ToTable("price_good_order");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PriceGoodVisibility", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GoodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GoodId")
+                        .IsUnique();
+
+                    b.ToTable("price_goods_visibility");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PriceType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasDefaultValue("");
 
                     b.Property<bool>("IsTransit")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PriceType");
+                    b.ToTable("price_types");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Shipment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<long>("CreatorId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("FactoryId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("LastEdit")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<long>("LastEditorId")
                         .HasColumnType("bigint");
@@ -533,46 +630,47 @@ namespace VmsInform.DbMigration.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("ShipmentDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
 
+                    b.HasIndex("FactoryId");
+
                     b.HasIndex("LastEditorId");
 
                     b.HasIndex("PartnerId");
 
-                    b.ToTable("Shipments");
+                    b.ToTable("shipments");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<string>("EMail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("IsAmin")
-                        .HasColumnType("bit");
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
                         .HasDefaultValue("");
 
                     b.HasKey("Id");
@@ -580,25 +678,33 @@ namespace VmsInform.DbMigration.Migrations
                     b.HasIndex("EMail")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("users");
                 });
 
-            modelBuilder.Entity("VmsInform.DAL.Domain.UserSession", b =>
+            modelBuilder.Entity("VmsInform.DAL.Domain.UserNotifications.UserNotification", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("UserNotificationid");
 
-                    b.Property<string>("SessionKey")
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("StartTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
+                    b.Property<bool>("IsImportant")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -607,7 +713,45 @@ namespace VmsInform.DbMigration.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSessions");
+                    b.ToTable("user_notifications");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("UserNotification");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.UserSession", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SessionKey")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_sessions");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.UserNotifications.UserNotificationNews", b =>
+                {
+                    b.HasBaseType("VmsInform.DAL.Domain.UserNotifications.UserNotification");
+
+                    b.Property<long>("NewsId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("NewsId");
+
+                    b.HasDiscriminator().HasValue("UserNotificationNews");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.BaseGoodPrice", b =>
@@ -615,6 +759,10 @@ namespace VmsInform.DbMigration.Migrations
                     b.HasOne("VmsInform.DAL.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId");
+
+                    b.HasOne("VmsInform.DAL.Domain.Factory", "Factory")
+                        .WithMany()
+                        .HasForeignKey("FactoryId");
 
                     b.HasOne("VmsInform.DAL.Domain.Good", "Good")
                         .WithOne("BasePrice")
@@ -625,6 +773,14 @@ namespace VmsInform.DbMigration.Migrations
                     b.HasOne("VmsInform.DAL.Domain.Partner", "Partner")
                         .WithMany()
                         .HasForeignKey("PartnerId");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Factory");
+
+                    b.Navigation("Good");
+
+                    b.Navigation("Partner");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.BaseGoodRule", b =>
@@ -634,6 +790,8 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("BaseGoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BaseGood");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Good", b =>
@@ -648,9 +806,9 @@ namespace VmsInform.DbMigration.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VmsInform.DAL.Domain.Currency", "SellCurrency")
-                        .WithMany()
-                        .HasForeignKey("SellCurrencyId");
+                    b.Navigation("BaseGoodRule");
+
+                    b.Navigation("GoodGroup");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.GoodGroup", b =>
@@ -659,6 +817,8 @@ namespace VmsInform.DbMigration.Migrations
                         .WithMany()
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.GoodSurcharge", b =>
@@ -674,6 +834,21 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("PriceTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Good");
+
+                    b.Navigation("PriceType");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.NewsEntry", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerContact", b =>
@@ -683,6 +858,27 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Partner");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PartnerFactory", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.Factory", "Factory")
+                        .WithMany("Partners")
+                        .HasForeignKey("FactoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VmsInform.DAL.Domain.Partner", "Partner")
+                        .WithMany("Factories")
+                        .HasForeignKey("PartnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factory");
+
+                    b.Navigation("Partner");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerGoodsToSell", b =>
@@ -692,6 +888,10 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("VmsInform.DAL.Domain.Factory", "Factory")
+                        .WithMany()
+                        .HasForeignKey("FactoryId");
 
                     b.HasOne("VmsInform.DAL.Domain.Good", "Good")
                         .WithMany()
@@ -704,6 +904,14 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Factory");
+
+                    b.Navigation("Good");
+
+                    b.Navigation("Partner");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PartnerPriceType", b =>
@@ -719,6 +927,21 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("PriceTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Partner");
+
+                    b.Navigation("PriceType");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PartnerShipmentAddress", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.Partner", "Partner")
+                        .WithMany("ShipmentAddresses")
+                        .HasForeignKey("PartnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Partner");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.PasswordRestoreRequest", b =>
@@ -728,6 +951,8 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Picture", b =>
@@ -744,6 +969,19 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("VmsInform.DAL.Domain.PriceGoodOrder", "GoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Good");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.PriceGoodVisibility", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.Good", "Good")
+                        .WithMany()
+                        .HasForeignKey("GoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Good");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.Shipment", b =>
@@ -753,6 +991,11 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("VmsInform.DAL.Domain.Factory", "Factory")
+                        .WithMany()
+                        .HasForeignKey("FactoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("VmsInform.DAL.Domain.User", "LastEditor")
                         .WithMany()
@@ -765,6 +1008,25 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Factory");
+
+                    b.Navigation("LastEditor");
+
+                    b.Navigation("Partner");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.UserNotifications.UserNotification", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("VmsInform.DAL.Domain.UserSession", b =>
@@ -774,6 +1036,54 @@ namespace VmsInform.DbMigration.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.UserNotifications.UserNotificationNews", b =>
+                {
+                    b.HasOne("VmsInform.DAL.Domain.NewsEntry", "News")
+                        .WithMany()
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("News");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.Factory", b =>
+                {
+                    b.Navigation("Partners");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.Good", b =>
+                {
+                    b.Navigation("BasePrice");
+
+                    b.Navigation("GoodSurcharges");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.GoodGroup", b =>
+                {
+                    b.Navigation("Goods");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.Partner", b =>
+                {
+                    b.Navigation("Contacts");
+
+                    b.Navigation("Factories");
+
+                    b.Navigation("GoodsToSell");
+
+                    b.Navigation("PriceTypes");
+
+                    b.Navigation("ShipmentAddresses");
+                });
+
+            modelBuilder.Entity("VmsInform.DAL.Domain.Shipment", b =>
+                {
+                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }

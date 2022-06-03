@@ -15,5 +15,8 @@ RUN dotnet publish /sources/VmsInformWeb.sln --framework net5 -c Release -o out 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-env /app/out .
-RUN apt-get update && apt-get install -y xvfb x11vnc x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic x11-apps libgdiplus libx11-dev
-ENTRYPOINT ["dotnet", "VmsInformWeb.dll"]
+RUN apt-get update && apt-get install -y xvfb x11vnc x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic x11-apps libgdiplus libx11-dev wget \
+	&& mkdir ~/.mysql && \
+		wget "https://crls.yandex.net/allCAs.pem" -O ~/.mysql/root.crt && \
+		chmod 0600 ~/.mysql/root.crt
+#ENTRYPOINT ["dotnet", "VmsInformWeb.dll"]

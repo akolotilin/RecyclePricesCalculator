@@ -10,15 +10,15 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("PriceType");
+            builder.ToTable("price_types");
 
             builder.Property(a => a.Name)
                 .HasMaxLength(100);
 
             builder.Property(a => a.Description)
-                .HasColumnType("nvarchar(max)")
-                .IsRequired()
-                .HasDefaultValue(string.Empty);
+                .HasMaxLength(1000)
+                .HasDefaultValue(string.Empty)
+                .IsRequired();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace VmsInform.DAL.Mapping
         {
             base.Configure(builder);
 
-            builder.ToTable("News");
+            builder.ToTable("news");
 
             builder.HasOne(a => a.Author)
                 .WithMany()
@@ -23,7 +23,7 @@ namespace VmsInform.DAL.Mapping
 
             builder.Property(a => a.Text)
                 .IsRequired()
-                .HasColumnType("nvarchar(max)");
+                .HasColumnType("text");
         }
     }
 }
