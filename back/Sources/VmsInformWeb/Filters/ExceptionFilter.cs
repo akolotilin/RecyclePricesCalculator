@@ -12,6 +12,7 @@ namespace VmsInformWeb.Filters
     {
         public void OnException(ExceptionContext context)
         {
+            context.ExceptionHandled = true;
             switch (context.Exception)
             {
                 case ForbiddenException:

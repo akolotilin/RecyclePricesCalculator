@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Immutable;
@@ -9,15 +10,15 @@ namespace VmsInform.DAL.MyBoxRepositories
 {
     public class VmsInformContext : DbContext
     {
-        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
         private readonly ILoggerFactory _loggerFactory;
 
         public static volatile ImmutableHashSet<Type> SupportedRepositoryTypes;
         public DbSet<UserNotification> UserNotifications { get; set; }
 
-        public VmsInformContext(string connectionString, ILoggerFactory loggerFactory = null)
+        public VmsInformContext(IConfiguration configuration, ILoggerFactory loggerFactory = null)
         {
-            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _configuration = configuration;
             _loggerFactory = loggerFactory;
         }
 
@@ -56,7 +57,8 @@ namespace VmsInform.DAL.MyBoxRepositories
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL(_connectionString)
+                var connectionString = _configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseNpgsql(connectionString)
                     .UseLazyLoadingProxies();
                 
                 if (_loggerFactory != null)

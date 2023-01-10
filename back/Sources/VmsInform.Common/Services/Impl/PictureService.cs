@@ -39,7 +39,7 @@ namespace VmsInform.Common.Services.Impl
             return picture.Data;
         }
 
-        public async Task<byte[]> GetThumbnail(long id)
+        public async Task<byte[]> GetThumbnail(long id, int size)
         {
             var picture = await _picturesRepository.GetAsync(id, default(CancellationToken));
 
@@ -52,7 +52,7 @@ namespace VmsInform.Common.Services.Impl
                 Image image = Image.Load(stream, out IImageFormat format);
                 image.Mutate(a => a.Resize(new ResizeOptions
                 {
-                    Size = new Size(128, 128),
+                    Size = new Size(size, size),
                     Mode = ResizeMode.Max
                 }));
 

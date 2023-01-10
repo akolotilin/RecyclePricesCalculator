@@ -14,6 +14,7 @@ namespace VmsInformWeb.DI
 
             builder.RegisterGeneric(typeof(VmsInformRepository<>))
                 .As(typeof(IVmsInformRepository<>))
+                .As(typeof(IRepositoryQuery<>))
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<GlobalSettings>()

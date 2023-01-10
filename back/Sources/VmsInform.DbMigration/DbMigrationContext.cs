@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using VmsInform.DAL.MyBoxRepositories;
 
 namespace VmsInform.DbMigration
@@ -11,8 +12,8 @@ namespace VmsInform.DbMigration
 
         }
 
-        public DbMigrationContext(string connectionString)
-            : base(connectionString)
+        public DbMigrationContext(IConfiguration configuration)
+            : base(configuration)
         {
 
         }

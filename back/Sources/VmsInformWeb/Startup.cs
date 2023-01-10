@@ -93,22 +93,22 @@ namespace VmsInformWeb
                 .SingleInstance();
 
             //builder.Register(ctx => new VmsInformContext("Data Source=192.168.5.230;Initial Catalog=autoPrice;User ID=sa; pwd=st3b8aXd;"))
-                builder.Register(ctx => new VmsInformContext(Configuration.GetConnectionString(_connectionStringName)))
-                .As<DbContext>()
-                .InstancePerLifetimeScope();
+            builder.RegisterType<VmsInformContext>()
+            .As<DbContext>()
+            .InstancePerLifetimeScope();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            //if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", _swaggerApiTitle));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -141,7 +141,7 @@ namespace VmsInformWeb
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            new DbMigrationContext(Configuration.GetConnectionString(_connectionStringName)).Database.Migrate();
+            new DbMigrationContext(Configuration).Database.Migrate();
 
             Console.WriteLine(Configuration.GetConnectionString(_connectionStringName));
             //new DbMigrationContext("Data Source=192.168.5.230;Initial Catalog=autoPrice;User ID=sa; pwd=st3b8aXd;").Database.Migrate();

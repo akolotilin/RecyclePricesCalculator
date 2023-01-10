@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace VmsInform.DbMigration.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,10 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
-                    ExchangeRate = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Code = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
+                    ExchangeRate = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,13 +28,13 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
-                    MinGarbage = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
-                    MaxGarbage = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
-                    Distance = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    MinGarbage = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
+                    MaxGarbage = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
+                    Distance = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
                     Comment = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                    Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,11 +46,11 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ParentId = table.Column<long>(type: "bigint", nullable: true),
                     Guid = table.Column<string>(type: "varchar(36)", nullable: false),
-                    Code = table.Column<string>(type: "varchar(25)", maxLength: 25, nullable: true),
-                    Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                    Code = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: true),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,22 +67,16 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    LastPricesUpdateDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    Comment = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, defaultValue: ""),
-                    Address = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
-                    IsSeller = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsBuyer = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TaxNumber = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false, defaultValue: ""),
-                    CellPhone = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false, defaultValue: ""),
-                    OfficePhone = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
-                    Viber = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false, defaultValue: ""),
-                    WhatsApp = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false, defaultValue: ""),
-                    Skype = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
-                    TransportPrice = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
-                    UsePriceOffersByFactories = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    Name = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    LastPricesUpdateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true, defaultValue: ""),
+                    Address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    IsSeller = table.Column<bool>(type: "boolean", nullable: false),
+                    IsBuyer = table.Column<bool>(type: "boolean", nullable: false),
+                    TaxNumber = table.Column<string>(type: "character varying(12)", maxLength: 12, nullable: false, defaultValue: ""),
+                    TransportPrice = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
+                    UsePriceOffersByFactories = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,10 +88,10 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    IsTransit = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false, defaultValue: ""),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IsTransit = table.Column<bool>(type: "boolean", nullable: false),
+                    Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false, defaultValue: ""),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,12 +103,12 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Value = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
-                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    Order = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    Domain = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    Value = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    Type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Order = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Domain = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,12 +120,12 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    EMail = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
-                    FullName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EMail = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    FullName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -143,8 +137,8 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ContactType = table.Column<int>(type: "int", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ContactType = table.Column<int>(type: "integer", nullable: false),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
                     ContactData = table.Column<string>(type: "text", nullable: true)
                 },
@@ -164,7 +158,7 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
                     FactoryId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -190,9 +184,9 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
-                    Address = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    Address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,7 +204,7 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
                     PriceTypeId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -236,14 +230,14 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    DateTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     AuthorId = table.Column<long>(type: "bigint", nullable: false),
-                    Title = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
+                    Title = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Text = table.Column<string>(type: "text", nullable: false),
-                    IsImportant = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsPublished = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PublishDate = table.Column<DateTime>(type: "datetime", nullable: true)
+                    IsImportant = table.Column<bool>(type: "boolean", nullable: false),
+                    IsPublished = table.Column<bool>(type: "boolean", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -261,12 +255,12 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Key = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    IsClosed = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Key = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsClosed = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,12 +278,12 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     LastEditorId = table.Column<long>(type: "bigint", nullable: false),
-                    LastEdit = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastEdit = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ShipmentDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ShipmentDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Comment = table.Column<string>(type: "text", nullable: false),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
                     FactoryId = table.Column<long>(type: "bigint", nullable: true)
@@ -328,9 +322,9 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    StartTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    SessionKey = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    SessionKey = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -349,12 +343,12 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     UserNotificationid = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Subject = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    IsRead = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsImportant = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Subject = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    IsRead = table.Column<bool>(type: "boolean", nullable: false),
+                    IsImportant = table.Column<bool>(type: "boolean", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: false),
                     NewsId = table.Column<long>(type: "bigint", nullable: true)
                 },
@@ -380,8 +374,8 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<byte[]>(type: "varbinary(4000)", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Data = table.Column<byte[]>(type: "bytea", nullable: false),
                     ShipmentId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -400,14 +394,14 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GoodGroupId = table.Column<long>(type: "bigint", nullable: false),
-                    Comment = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, defaultValue: ""),
-                    InputPriceManual = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true, defaultValue: ""),
+                    InputPriceManual = table.Column<bool>(type: "boolean", nullable: false),
                     BaseGoodRuleId = table.Column<long>(type: "bigint", nullable: true),
-                    Guid = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Code = table.Column<string>(type: "varchar(25)", maxLength: 25, nullable: true),
-                    Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                    Guid = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: true),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -421,38 +415,17 @@ namespace VmsInform.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "base_good_gules",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    BaseGoodId = table.Column<long>(type: "bigint", nullable: false),
-                    Multiplier = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Add = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_base_good_gules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_base_good_gules_goods_BaseGoodId",
-                        column: x => x.BaseGoodId,
-                        principalTable: "goods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "base_good_prices",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GoodId = table.Column<long>(type: "bigint", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
                     PartnerId = table.Column<long>(type: "bigint", nullable: true),
                     FactoryId = table.Column<long>(type: "bigint", nullable: true),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
+                    ExpirationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     CurrencyId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -485,14 +458,35 @@ namespace VmsInform.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "base_good_rules",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BaseGoodId = table.Column<long>(type: "bigint", nullable: false),
+                    Multiplier = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
+                    Add = table.Column<decimal>(type: "numeric(10,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_base_good_rules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_base_good_rules_goods_BaseGoodId",
+                        column: x => x.BaseGoodId,
+                        principalTable: "goods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "good_surcharge",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GoodId = table.Column<long>(type: "bigint", nullable: false),
                     PriceTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    Surcharge = table.Column<decimal>(type: "decimal(10,2)", nullable: false, defaultValue: 0m)
+                    Surcharge = table.Column<decimal>(type: "numeric(10,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -516,11 +510,11 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PartnerId = table.Column<long>(type: "bigint", nullable: false),
                     FactoryId = table.Column<long>(type: "bigint", nullable: true),
                     GoodId = table.Column<long>(type: "bigint", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(15,2)", nullable: false, defaultValue: 0m),
+                    Price = table.Column<decimal>(type: "numeric(15,2)", nullable: false, defaultValue: 0m),
                     CurrencyId = table.Column<long>(type: "bigint", nullable: false),
                     ValidThru = table.Column<DateTime>(type: "date", nullable: false)
                 },
@@ -558,9 +552,9 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GoodId = table.Column<long>(type: "bigint", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false)
+                    Order = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -578,9 +572,9 @@ namespace VmsInform.DbMigration.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GoodId = table.Column<long>(type: "bigint", nullable: false),
-                    IsVisible = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    IsVisible = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -592,11 +586,6 @@ namespace VmsInform.DbMigration.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_base_good_gules_BaseGoodId",
-                table: "base_good_gules",
-                column: "BaseGoodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_base_good_prices_CurrencyId",
@@ -618,6 +607,11 @@ namespace VmsInform.DbMigration.Migrations
                 name: "IX_base_good_prices_PartnerId",
                 table: "base_good_prices",
                 column: "PartnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_base_good_rules_BaseGoodId",
+                table: "base_good_rules",
+                column: "BaseGoodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_good_groups_ParentId",
@@ -776,10 +770,10 @@ namespace VmsInform.DbMigration.Migrations
                 unique: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_goods_base_good_gules_BaseGoodRuleId",
+                name: "FK_goods_base_good_rules_BaseGoodRuleId",
                 table: "goods",
                 column: "BaseGoodRuleId",
-                principalTable: "base_good_gules",
+                principalTable: "base_good_rules",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -787,8 +781,8 @@ namespace VmsInform.DbMigration.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_base_good_gules_goods_BaseGoodId",
-                table: "base_good_gules");
+                name: "FK_base_good_rules_goods_BaseGoodId",
+                table: "base_good_rules");
 
             migrationBuilder.DropTable(
                 name: "base_good_prices");
@@ -857,7 +851,7 @@ namespace VmsInform.DbMigration.Migrations
                 name: "goods");
 
             migrationBuilder.DropTable(
-                name: "base_good_gules");
+                name: "base_good_rules");
 
             migrationBuilder.DropTable(
                 name: "good_groups");

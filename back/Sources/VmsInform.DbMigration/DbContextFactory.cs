@@ -20,7 +20,7 @@ namespace VmsInform.DbMigration
 
             // получаем строку подключения из файла appsettings.json
             string connectionString = config.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseMySQL(connectionString, opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
+            optionsBuilder.UseNpgsql(connectionString, opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
             return new DbMigrationContext(optionsBuilder.Options);
         }
     }

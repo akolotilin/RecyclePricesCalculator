@@ -15,8 +15,4 @@
     <ProjectReference Include="..\VmsInform.Web.Dto\VmsInform.Web.Dto.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TypeMapping\Profiles\Converters\" />
-  </ItemGroup>
-
 </Project>

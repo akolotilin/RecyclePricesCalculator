@@ -25,6 +25,7 @@ namespace VmsInform.Business.TypeMapping
             configuration.AddProfile<ShipmentProfile>();
             configuration.AddProfile<FactoryProfile>();
             configuration.AddProfile(new NewsProfile(_userServiceFactory));
+            configuration.AddProfile<ProductsProfile>();
         }
     }
 }

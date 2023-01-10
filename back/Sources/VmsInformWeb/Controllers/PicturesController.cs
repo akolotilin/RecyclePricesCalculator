@@ -39,9 +39,9 @@ namespace VmsInformWeb.Controllers
         }
 
         [HttpGet("{id}/thumbnail")]
-        public async Task<ActionResult> GetThumbnail(long id)
+        public async Task<ActionResult> GetThumbnail(long id, [FromQuery] int size = 128)
         {
-            var data = await _pictureService.GetThumbnail(id);
+            var data = await _pictureService.GetThumbnail(id, size);
             return File(data, Image.Jpeg);
         }
     }

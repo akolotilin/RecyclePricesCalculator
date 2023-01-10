@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -18,18 +17,6 @@ namespace VmsInform.DAL.MyBoxRepositories
             _repositories = new Dictionary<Type, object>();
             TransactionManager = new Transaction(_dbContext);
             Programmability = new SqlProgrammability(_dbContext);
-        }
-
-        public VmsInformUnitOfWork(string connectionString, ILoggerFactory loggerFactory)
-            :this(new VmsInformContext(connectionString, loggerFactory))
-        {
-
-        }
-
-        public VmsInformUnitOfWork(string connectionString, ITransaction transactionManager, ILoggerFactory loggerFactory)
-            : this(connectionString, loggerFactory)
-        {
-            TransactionManager = transactionManager;
         }
 
         public ITransaction TransactionManager { get; }
