@@ -15,7 +15,7 @@ namespace VmsInform.Business.TypeMapping.Profiles
                 .ForMember(a => a.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(a => a.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(a => a.Components, opt => opt.MapFrom(src => src.ComponentsRaw.Select(a => new ProductComponentDto { Id = a.GoodId, Name = a.Good.Name, Type = ComponentType.Raw, Percentage = a.Percentage })))
-                .ForMember(a => a.Pictures, opt => opt.MapFrom(src => src.Pictures.Select(a => a.PictureId)));
+                .ForMember(a => a.Pictures, opt => opt.MapFrom(src => src.Pictures.Select(a => new ProductPictureDto { PictureId = a.PictureId })));
 
             CreateMap<ProductEditDto, ProductEntry>()
                 .ForMember(a => a.Id, opt => opt.MapFrom(src => src.Id))
@@ -50,7 +50,7 @@ namespace VmsInform.Business.TypeMapping.Profiles
                     
                     foreach(var pic in src.Pictures)
                     {
-                        dst.Pictures.Add(new ProductPictureEntry { PictureId = pic });
+                        dst.Pictures.Add(new ProductPictureEntry { PictureId = pic.PictureId });
                     }
 
                 });

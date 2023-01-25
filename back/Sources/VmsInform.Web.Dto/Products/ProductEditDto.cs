@@ -8,6 +8,6 @@ namespace VmsInform.Web.Dto.Products
         public string Name { get; set; }
         public string Description { get; set; }
         public IEnumerable<ProductComponentDto> Components { get; set; }
-        public IEnumerable<long> Pictures { get; set; }
+        public IEnumerable<ProductPictureDto> Pictures { get; set; }
     }
 }
