@@ -38,28 +38,16 @@ namespace VmsInformWeb.Controllers
         }
 
         [HttpGet]
-        public Task<GetPricesResultDto> Get()
-        {
-            return _mediator.Send(new GetPricesQuery());
-        }
+        public Task<GetPricesResultDto> Get() => _mediator.Send(new GetPricesQuery());
 
         [HttpGet("calcPrice")]
-        public Task<PriceDto> CalcPrice([FromQuery] CalcPriceQuery query)
-        {
-            return _mediator.Send(query);
-        }
+        public Task<PriceDto> CalcPrice([FromQuery] CalcPriceQuery query) => _mediator.Send(query);
 
         [HttpPut("update")]
-        public Task<PriceItemData> Update([FromBody] UpdateSurchargeCommand command)
-        {
-            return _mediator.Send(command);
-        }
+        public Task<PriceItemData> Update([FromBody] UpdateSurchargeCommand command) => _mediator.Send(command);
 
         [HttpGet("priceOffers/{GoodId}")]
-        public Task<GoodPriceOffersResultDto> GetPriceOffers([FromRoute] GetPriceOffersQuery query)
-        {
-            return _mediator.Send(query);
-        }
+        public Task<GoodPriceOffersResultDto> GetPriceOffers([FromRoute] GetPriceOffersQuery query) => _mediator.Send(query);
 
         [HttpPut("{goodId}/updateBasePriceFromOffer")]
         public async Task<PricesEditGoodDto> UpdateBasePrice([FromRoute] long goodId, [FromBody] PartnerPriceOfferDto offer)
